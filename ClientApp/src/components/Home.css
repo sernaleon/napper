@@ -1,0 +1,31 @@
+td.Nap {
+    background-color: rgba(125, 141, 215, 0.7);
+}
+
+td.Awake {
+    background-color: rgb(150, 245, 150);
+}
+
+td.NightTime {
+    background-color: rgb(90, 82, 246);
+}
+
+
+
+.table {
+    border-radius: 0.2rem;
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.table th:first-child,
+.table td:first-child {
+    position: sticky;
+    left: 0;
+    background-color: white;
+    text-align: right;
+}
+
+.table td {
+    white-space: nowrap;
+}

@@ -1,0 +1,13 @@
+﻿{
+  "profiles": {
+    "napper": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:7009;http://localhost:5181",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
+      }
+    }
+  }
+}
