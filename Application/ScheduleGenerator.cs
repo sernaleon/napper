@@ -17,14 +17,14 @@ public class ScheduleGenerator
 
         var startTime = _configuration.StartOfSchedule;
 
-        //TODO: FLIP LOOP SO THAT LONGER PERIODS GO FIRST
-        var endTime = _configuration.WakeUpTimeMin;
+        var endTime = _configuration.WakeUpTimeMax;
 
-        while (endTime < _configuration.WakeUpTimeMax)
+        while (endTime >= _configuration.WakeUpTimeMin)
         {
             var scheduleDay = new ScheduleDay(startTime, endTime, ScheduleActivity.NightTime);
             AddAwake(schedules, scheduleDay, filters);
-            endTime = endTime.AddMinutes(_configuration.TimeIncrementMinutes);
+            
+            endTime = endTime.AddMinutes(- _configuration.TimeIncrementMinutes);
         }
         return schedules;
     }
@@ -44,14 +44,14 @@ public class ScheduleGenerator
             return;
         }
 
-        var napTimeMinutes = _configuration.NapTimeMinutesMin;
+        var napTimeMinutes = _configuration.NapTimeMinutesMax;
 
-        while (napTimeMinutes <= _configuration.NapTimeMinutesMax)
+        while (napTimeMinutes >= _configuration.NapTimeMinutesMin)
         {
             var schedule = current.NewWith(ScheduleActivity.Nap, napTimeMinutes);
             AddAwake(results, schedule, filters);
 
-            napTimeMinutes += _configuration.TimeIncrementMinutes;
+            napTimeMinutes -= _configuration.TimeIncrementMinutes;
         }
     }
 
@@ -62,14 +62,14 @@ public class ScheduleGenerator
             return;
         }
 
-        var awakeTimeMinutes = _configuration.AwakeTimeMinutesMin;
+        var awakeTimeMinutes = _configuration.AwakeTimeMinutesMax;
 
-        while (awakeTimeMinutes <= _configuration.AwakeTimeMinutesMax)
+        while (awakeTimeMinutes >= _configuration.AwakeTimeMinutesMin)
         {
             var schedule = current.NewWith(ScheduleActivity.Awake, awakeTimeMinutes);
             AddNap(results, schedule, filters);
 
-            awakeTimeMinutes += _configuration.TimeIncrementMinutes;
+            awakeTimeMinutes -= _configuration.TimeIncrementMinutes;
         }
     }
 }
