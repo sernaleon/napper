@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Napper.Application;
+using Napper.Core;
+using Napper.Mappers;
 
 namespace napper.Controllers;
 
@@ -7,9 +8,9 @@ namespace napper.Controllers;
 [Route("api")]
 public class SchedulesController : ControllerBase
 {
-    private readonly ScheduleService _scheduleService;
+    private readonly IScheduleService _scheduleService;
 
-    public SchedulesController(ScheduleService scheduleService)
+    public SchedulesController(IScheduleService scheduleService)
     {
         _scheduleService = scheduleService;
     }
@@ -17,9 +18,7 @@ public class SchedulesController : ControllerBase
     [HttpGet("schedules/table/")]
     public string[][] Table()
     {
-        var result =  _scheduleService.GetSchedules(new());
-        var table = result.ConvertToTable();
-        return table;
+        return Table("");
     }
 
     [HttpGet("schedules/table/{*filters}")]
@@ -27,15 +26,21 @@ public class SchedulesController : ControllerBase
     {
         var scheduleFilters = ParseFiltersFromUrl(filters);
         var result =  _scheduleService.GetSchedules(scheduleFilters);
-        var table = result.ConvertToTable();
+        var table = result.ToScheduleTable();
         return table;
     }
 
-    private static List<ScheduleFilter> ParseFiltersFromUrl(string filters)
+    private static List<ScheduleFilter> ParseFiltersFromUrl(string filtersUrl)
     {
         List<ScheduleFilter> scheduleFilters = new();
 
-        var filterSegments = filters.Split('/');
+        var filterSegments = filtersUrl.Split('/');
+
+        if (filterSegments.Length % 3 != 0)
+        {
+            return scheduleFilters;
+        }
+
         for (int i = 0; i < filterSegments.Length; i += 3)
         {
             var activity = Enum.Parse<ScheduleActivity>(filterSegments[i], true);

@@ -1,6 +1,8 @@
-namespace Napper.Application;
+using Napper.Core;
 
-public static class MetadataToTableConverter
+namespace Napper.Mappers;
+
+public static class MetadataToTableMapper
 {
 
   private static readonly string[] Keys = new[]
@@ -45,7 +47,7 @@ public static class MetadataToTableConverter
 
   // The first row is "", "Schedule 1", "Schedule 2", ...
   // The second row is "Number of naps", "3", "2","1"
-  public static string[][] ConvertToTable(this List<ScheduleDayMetadata> metadatas)
+  public static string[][] ToScheduleTable(this List<ScheduleDayMetadata> metadatas)
   {
 
     var result = new string[Keys.Length + 1][];

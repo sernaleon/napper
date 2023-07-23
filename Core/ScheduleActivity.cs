@@ -1,5 +1,4 @@
-
-namespace Napper.Application;
+namespace Napper.Core;
 
 public enum ScheduleActivity
 {

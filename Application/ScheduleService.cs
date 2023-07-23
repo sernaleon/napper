@@ -1,6 +1,8 @@
-﻿namespace Napper.Application;
+﻿using Napper.Core;
 
-public class ScheduleService
+namespace Napper.Application;
+
+public class ScheduleService : IScheduleService
 {
   private readonly ScheduleGenerator _generator;
   private readonly ScheduleDayMetadataCalulator _metadataCalulator;

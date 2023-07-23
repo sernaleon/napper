@@ -1,4 +1,5 @@
 using Napper.Application;
+using Napper.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 

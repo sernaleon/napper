@@ -1,3 +1,5 @@
+using Napper.Core;
+
 namespace Napper.Application;
 
 public class ScheduleGenerator
