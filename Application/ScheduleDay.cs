@@ -39,6 +39,21 @@ public class ScheduleDay
     return _schedule.Last().EndTime;
   }
 
+  public bool IsValid(List<ScheduleFilter> filters) 
+  {
+    return filters.All(EvaluateFilter);
+  }
+
+  private bool EvaluateFilter(ScheduleFilter filter)
+  {
+    return filter.Action switch
+    {
+      FilterAction.Starts => filter.Time >  _schedule.Last().StartTime || _schedule.Any(item => item.Activity == filter.Activity && item.StartTime == filter.Time),
+      FilterAction.Ends   => filter.Time > GetLastEndTime() || _schedule.Any(item => item.Activity == filter.Activity && item.EndTime == filter.Time),
+      _ => throw new ArgumentException("Invalid filter action."),
+    };
+  }
+
   private ScheduleItem NewScheduleItem(ScheduleActivity activity, int durationMinutes)
   {
     var startTime = GetLastEndTime();

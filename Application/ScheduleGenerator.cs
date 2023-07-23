@@ -9,7 +9,7 @@ public class ScheduleGenerator
         _configuration = configuration;
     }
 
-    public List<IReadOnlyList<ScheduleItem>> GenerateSchedules()
+    public List<IReadOnlyList<ScheduleItem>> GenerateSchedules(List<ScheduleFilter> filters)
     {
         List<IReadOnlyList<ScheduleItem>> schedules = new();
 
@@ -20,15 +20,15 @@ public class ScheduleGenerator
         while (endTime < _configuration.WakeUpTimeMax)
         {
             var scheduleDay = new ScheduleDay(startTime, endTime, ScheduleActivity.NightTime);
-            AddAwake(schedules, scheduleDay);
+            AddAwake(schedules, scheduleDay, filters);
             endTime = endTime.AddMinutes(_configuration.TimeIncrementMinutes);
         }
         return schedules;
     }
 
-    private void AddNap(List<IReadOnlyList<ScheduleItem>> results, ScheduleDay current)
+    private void AddNap(List<IReadOnlyList<ScheduleItem>> results, ScheduleDay current, List<ScheduleFilter> filters)
     {
-        if (current.GetLastEndTime() >= _configuration.LastNapEndTime)
+        if (current.GetLastEndTime() >= _configuration.LastNapEndTime || !current.IsValid(filters))
         {
             return;
         }
@@ -38,16 +38,15 @@ public class ScheduleGenerator
         while (napTimeMinutes <= _configuration.NapTimeMinutesMax)
         {
             var schedule = current.NewWith(ScheduleActivity.Nap, napTimeMinutes);
-            AddAwake(results, schedule);
+            AddAwake(results, schedule, filters);
 
             napTimeMinutes += _configuration.TimeIncrementMinutes;
         }
-
     }
 
-    private void AddAwake(List<IReadOnlyList<ScheduleItem>> results, ScheduleDay current)
+    private void AddAwake(List<IReadOnlyList<ScheduleItem>> results, ScheduleDay current, List<ScheduleFilter> filters)
     {
-        if (current.GetLastEndTime() > _configuration.LastNapEndTime)
+        if (current.GetLastEndTime() > _configuration.LastNapEndTime || !current.IsValid(filters))
         {
             return;
         }
@@ -66,7 +65,7 @@ public class ScheduleGenerator
         while (awakeTimeMinutes <= _configuration.AwakeTimeMinutesMax)
         {
             var schedule = current.NewWith(ScheduleActivity.Awake, awakeTimeMinutes);
-            AddNap(results, schedule);
+            AddNap(results, schedule, filters);
 
             awakeTimeMinutes += _configuration.TimeIncrementMinutes;
         }
