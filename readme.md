@@ -1,7 +1,5 @@
-Can you write me a .NET console app? It should do the following:
-
 - The output returns all different possible schedules
-  - The output is in CSV format. It contains start time, end time, activity
+- The output is in CSV format. It contains start time, end time, activity
 - The only possible activities are “Nap” or “Awake”
 - A schedule must alternate between these 2. Having consecutive naps, or awake times is not allowed.
 - The schedule goes in 30 minutes increments
@@ -12,4 +10,4 @@ Can you write me a .NET console app? It should do the following:
 - The last Nap must finish at 18.30
 - On a given schedule, there might be different lengths of nap and awake time
 
-/https://localhost:44422/nighttime/ends/07:30/nap/starts/12:30/nap/ends/13:30
+https://localhost:44422/NightTime/Ends/07:00/Nap/Starts/8:30/Nap/Ends/10:30/Nap/Ends/13:30/Nap/Ends/18:30

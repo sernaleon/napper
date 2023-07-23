@@ -29,3 +29,7 @@ td.NightTime {
 .table td {
     white-space: nowrap;
 }
+
+.horizontal-scrollable {
+    overflow-x: auto;
+}
