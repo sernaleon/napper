@@ -17,6 +17,7 @@ public class ScheduleGenerator
 
         var startTime = _configuration.StartOfSchedule;
 
+        //TODO: FLIP LOOP SO THAT LONGER PERIODS GO FIRST
         var endTime = _configuration.WakeUpTimeMin;
 
         while (endTime < _configuration.WakeUpTimeMax)
@@ -30,8 +31,16 @@ public class ScheduleGenerator
 
     private void AddNap(List<IReadOnlyList<ScheduleItem>> results, ScheduleDay current, List<ScheduleFilter> filters)
     {
-        if (current.GetLastEndTime() >= _configuration.LastNapEndTime || !current.IsValid(filters))
+        if (!current.IsValid(filters) || current.GetLastEndTime() > _configuration.BedTimeMax)
         {
+            return;
+        }
+
+        if (current.GetLastEndTime() >= _configuration.BedTimeMin)
+        {
+            current.Add(ScheduleActivity.NightTime, endTime: _configuration.EndOfSchedule);
+            var schedule = current.GetSchedule();
+            results.Add(schedule);
             return;
         }
 
@@ -48,17 +57,8 @@ public class ScheduleGenerator
 
     private void AddAwake(List<IReadOnlyList<ScheduleItem>> results, ScheduleDay current, List<ScheduleFilter> filters)
     {
-        if (current.GetLastEndTime() > _configuration.LastNapEndTime || !current.IsValid(filters))
+        if (!current.IsValid(filters) || current.GetLastEndTime() > _configuration.BedTimeMax)
         {
-            return;
-        }
-
-        if (current.GetLastEndTime() == _configuration.LastNapEndTime)
-        {
-            current.Add(ScheduleActivity.Awake, endTime: _configuration.BedTime);
-            current.Add(ScheduleActivity.NightTime, endTime: _configuration.EndOfSchedule);
-            var schedule = current.GetSchedule();
-            results.Add(schedule);
             return;
         }
 

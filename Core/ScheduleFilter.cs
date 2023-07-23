@@ -1,6 +1,6 @@
 namespace Napper.Core;
 
-public class ScheduleFilter
+public record ScheduleFilter
 {
   public ScheduleActivity Activity { get; set; }
   public FilterAction Action { get; set; }

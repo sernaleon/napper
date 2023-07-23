@@ -6,8 +6,8 @@ public record ScheduleConfiguration
     public DateTime StartOfSchedule { get; set; }
     public DateTime WakeUpTimeMin { get; set; }
     public DateTime WakeUpTimeMax { get; set; }
-    public DateTime LastNapEndTime { get; set; }
-    public DateTime BedTime { get; set; }
+    public DateTime BedTimeMin { get; set; }
+    public DateTime BedTimeMax { get; set; }
     public DateTime EndOfSchedule { get; set; }
     public int NapTimeMinutesMin { get; set; }
     public int NapTimeMinutesMax { get; set; }

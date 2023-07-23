@@ -25,6 +25,15 @@ public class SchedulesController : ControllerBase
     public string[][] Table(string filters)
     {
         var scheduleFilters = ParseFiltersFromUrl(filters);
+
+        //TODO: Move to front-end
+        filters.Add(new ScheduleFilter
+        {
+        Activity = ScheduleActivity.Nap,
+        Action = FilterAction.Ends,
+        Time = DateTime.Parse("18:30")
+        });
+
         var result =  _scheduleService.GetSchedules(scheduleFilters);
         var table = result.ToScheduleTable();
         return table;
