@@ -1,5 +1,6 @@
 
 namespace Napper.Application;
+
 public enum ScheduleActivity
 {
     Nap,

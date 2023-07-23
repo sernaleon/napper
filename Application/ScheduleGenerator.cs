@@ -72,19 +72,3 @@ public class ScheduleGenerator
         }
     }
 }
-
-
-    // AddNext(_configuration.NapTimeMinutesMin,_configuration.NapTimeMinutesMax, ScheduleActivity.Nap, AddAwake, current, results);
-    
-    // private void AddNext(int min, int max, ScheduleActivity activity, Action<List<IReadOnlyList<ScheduleItem>>, ScheduleDay> next, ScheduleDay current, List<IReadOnlyList<ScheduleItem>> results)
-    // {      
-    //     var minutes = min;
-
-    //     while (minutes <= max)
-    //     {
-    //         var schedule = current.NewWith(activity, minutes);
-    //         next(results, schedule);
-
-    //         minutes += _configuration.TimeIncrementMinutes;
-    //     }
-    // }
