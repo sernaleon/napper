@@ -1,6 +1,5 @@
 namespace Napper.Application;
 
-using System.Linq;
 using Napper.Core;
 
 public class ScheduleDay

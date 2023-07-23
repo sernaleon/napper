@@ -9,7 +9,7 @@ public static class ScheduleDependencyInjectionExtensions
     services.AddSingleton(configuration);
     services.AddTransient<IScheduleService, ScheduleService>();
     services.AddTransient<ScheduleGenerator>();
-    services.AddTransient<ScheduleDayMetadataCalulator>();
+    services.AddTransient<ScheduleDayMetadataCalculator>();
     return services;
   }
 }

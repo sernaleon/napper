@@ -5,9 +5,9 @@ namespace Napper.Application;
 public class ScheduleService : IScheduleService
 {
   private readonly ScheduleGenerator _generator;
-  private readonly ScheduleDayMetadataCalulator _metadataCalulator;
+  private readonly ScheduleDayMetadataCalculator _metadataCalulator;
 
-  public ScheduleService(ScheduleGenerator generator, ScheduleDayMetadataCalulator metadataCalulator)
+  public ScheduleService(ScheduleGenerator generator, ScheduleDayMetadataCalculator metadataCalulator)
   {
     _generator = generator;
     _metadataCalulator = metadataCalulator;

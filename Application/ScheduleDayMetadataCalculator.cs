@@ -1,13 +1,12 @@
 namespace Napper.Application;
 
-using System.Linq;
 using Napper.Core;
 
-public class ScheduleDayMetadataCalulator
+public class ScheduleDayMetadataCalculator
 {
   private readonly ScheduleConfiguration _configuration;
 
-  public ScheduleDayMetadataCalulator(ScheduleConfiguration configuration)
+  public ScheduleDayMetadataCalculator(ScheduleConfiguration configuration)
   {
     _configuration = configuration;
   }
@@ -29,7 +28,6 @@ public class ScheduleDayMetadataCalulator
 
   private int GetScore(IReadOnlyList<ScheduleItem> schedule)
   {
-
     var napCountScore = CalculateScore(GetNumberOfNaps(schedule), _configuration.TargetNapCount);
     var napHoursScore = CalculateScore(GetNapHours(schedule), _configuration.TargetNapHours);
     var awakeHoursScore = CalculateScore(GetAwakeHours(schedule), _configuration.TargetAwakeHours);

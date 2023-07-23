@@ -4,7 +4,7 @@ using Napper.Core;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllers();
 
 ScheduleConfiguration scheduleConfiguration = new();
 builder.Configuration.GetSection("ScheduleConfiguration").Bind(scheduleConfiguration);
