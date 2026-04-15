@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Napper - Sleep Schedule Optimizer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-top">
+        <div class="header-content">
+          <h1>🌙 Napper</h1>
+          <p class="subtitle">Find your perfect sleep schedule</p>
+        </div>
+        <button class="help-button" id="helpButton" title="Show help">?</button>
+      </div>
+
+      <div class="filter-summary" id="filterSummary">
+        <span class="summary-text" id="filterSummaryText">No constraints applied. Click to open filters.</span>
+        <button class="summary-toggle collapsed" id="collapseToggle" type="button" aria-expanded="false">Show filters</button>
+      </div>
+
+      <aside class="filters-panel collapsed" id="filtersPanel">
+        <div class="filters-header">
+          <h2>Constraints</h2>
+        </div>
+
+        <div id="filters" class="filters-list"></div>
+
+        <div class="filter-actions">
+          <button id="addFilter" class="btn btn-secondary" type="button">
+            <span>+ Add Constraint</span>
+          </button>
+          <button id="applyFilters" class="btn btn-primary" type="button">
+            <span>Apply</span>
+          </button>
+        </div>
+      </aside>
+    </header>
+
+    <!-- Help Modal -->
+    <div class="modal" id="helpModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>How to Use Napper</h2>
+          <button class="close-button" id="closeHelpButton">&times;</button>
+        </div>
+        <div class="modal-body">
+          <h3>What is Napper?</h3>
+          <p>Napper generates all possible sleep schedules within your constraints and scores them based on sleep quality targets.</p>
+
+          <h3>Understanding Constraints</h3>
+          <ul>
+            <li><strong>Wake Time:</strong> You can wake up between 6:30 AM and 8:30 AM</li>
+            <li><strong>Nap Duration:</strong> Naps last 1, 1.5, or 2 hours</li>
+            <li><strong>Awake Duration:</strong> Awake periods last 1 or 1.5 hours</li>
+            <li><strong>Bedtime:</strong> Schedule must end by 8:30 PM</li>
+            <li><strong>Precision:</strong> All times use 30-minute increments</li>
+          </ul>
+
+          <h3>Using Filters</h3>
+          <p>Filters help narrow down schedules to your preferences:</p>
+          <table class="help-table">
+            <tr>
+              <td><strong>Activity</strong></td>
+              <td>Choose "Nap", "Awake", or "NightTime"</td>
+            </tr>
+            <tr>
+              <td><strong>Action</strong></td>
+              <td>Choose "Starts" or "Ends"</td>
+            </tr>
+            <tr>
+              <td><strong>Time</strong></td>
+              <td>Select the specific time</td>
+            </tr>
+          </table>
+
+          <h3>Example Filters</h3>
+          <ul>
+            <li>Nap / Starts / 08:30 → Find schedules with a nap starting at 8:30 AM</li>
+            <li>Nap / Ends / 10:00 → Find schedules with a nap ending at 10:00 AM</li>
+            <li>NightTime / Ends / 06:30 → Wake up at 6:30 AM</li>
+          </ul>
+
+          <h3>Reading the Results</h3>
+          <ul>
+            <li><strong>Score:</strong> Higher is better (based on matching sleep targets)</li>
+            <li><strong>Nap Count:</strong> Number of naps in the schedule</li>
+            <li><strong>Hours Columns:</strong> Breakdown of sleep distribution</li>
+            <li><strong>Color Coding:</strong> Purple = Nap, Green = Awake, Blue = Night</li>
+          </ul>
+
+          <h3>Tips</h3>
+          <ul>
+            <li>Start with no filters to see all possibilities</li>
+            <li>Add filters to narrow down to schedules you like</li>
+            <li>Multiple filters narrow results further</li>
+            <li>Use the Apply button to update results</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Table Panel -->
+      <section class="table-panel">
+        <div class="table-header">
+          <div>
+            <h2>Results</h2>
+            <p id="scheduleCount" class="schedule-count" style="display: none;">Found <span id="countNumber">0</span> schedules</p>
+          </div>
+          <div class="loading-indicator" id="loadingIndicator" style="display: none;">
+            <div class="spinner"></div>
+            <span>Calculating...</span>
+          </div>
+        </div>
+        <div class="horizontal-scrollable">
+          <table id="scheduleTable" class="results-table"></table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
